@@ -1,170 +1,324 @@
-<!doctype html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>LoveX</title>
-<style>
-html{ background: black;}
-body { width: 100%; height: 100%; position: absolute; left: 0; top: 0; overflow: hidden; margin: 0; background: black; -webkit-filter: invert(0); filter: invert(0); }
-#canvas { position: absolute; z-index: -1; -webkit-filter: hue-rotate(100deg) brightness(1); filter: hue-rotate(100deg) brightness(1); mix-blend-mode: difference; }
-#canv { position: absolute; z-index: -2; mix-blend-mode: lighter; }
-canvas { position: absolute; top: 50%; left: 50%; z-index: -1; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); }
-</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+	<title>关于 我</title>
+	<link rel="icon" href="images/233.ico" type="image/x-ico"/>
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<script type="text/javascript">
+	var isPc=false;
+	var isMobile = false;
+	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+		isMobile=true;
+	};
+	if(isMobile){
+		alert('为了您的浏览体验，本页面不支持移动端访问，请您使用PC浏览器访问。谢谢！点击确定后将为您跳转至其他页面！');
+		window.location.href="http://vip.chinanoob.xyz";
+	};
+	if((navigator.userAgent.indexOf('MSIE')>=0)){
+		isPc=true;
+	};
+	if(isPc){
+        alert('哎呀，由于逗比程序员对IE浏览器深恶痛绝，因此拒绝了您的访问。推荐您下载使用谷歌、火狐浏览器继续浏览哦~~！');
+        window.location.href="http://www.chromeliulanqi.com/";
+    };
+	</script>
 </head>
+<body class="loading-process">
+<div class="loading">
+	<div class="loading-circle"></div>
+	<div class="loading-avatar"><img src="images/avatar@2x.jpg" alt="" width="100" height="100"></div>
+	<div class="loading-info">正在努力加载中...</div>
+</div>
+<div class="section-header">
+	<div id="div1" style="width:110px;height:110px; position:absolute; left:0;top:200px"><img src="images/me.png" alt="扫我吧！" title="扫一下吧~" style="width:110px;height:110px;" /></div>
+	<script>
+	window.onload = function(){
+		var oDiv = document.getElementById('div1');
+		var iSpeedX = 18;
+		var iSpeedY = 2;
+		var timer = null;
+		var disX = 0;
+		var disY = 0;
+		var lastX = 0;
+		var lastY = 0;
+		clearInterval(timer);
+		var i = 0;
+		timer = setInterval(function(){
+			iSpeedY+=3;
+			i++;
+			var l = oDiv.offsetLeft+iSpeedX;
+			var t = oDiv.offsetTop+iSpeedY;
+			if(t<0){
+				t = 0;
+				iSpeedY*=-0.85;
+				iSpeedX*= 0.85;
+			}
+			if(t>document.documentElement.clientHeight-oDiv.offsetHeight){
+				t=document.documentElement.clientHeight-oDiv.offsetHeight;
+				iSpeedY*=-0.85;
+				iSpeedX*= 0.85;
+			}
+			if(l<0){
+				l = 0;
+				iSpeedX*=-0.85;
+				iSpeedY *=0.85;
+			}
+			if(l>document.documentElement.clientWidth-oDiv.offsetWidth){
+				l=document.documentElement.clientWidth-oDiv.offsetWidth;
+				iSpeedX*=-0.85;
+				iSpeedY *=0.85;
+			}
+			oDiv.style.left = l +'px';
+			oDiv.style.top = t +'px';
+			/*
+			if(Math.abs(iSpeedX)<1){
+				iSpeedX = 0;
+			}
+			*/
+			Math.abs(iSpeedX)<1&&(iSpeedX = 0);
+			Math.abs(iSpeedY)<1&&(iSpeedY = 0);
+			if(iSpeedX == 0&&iSpeedY == 0&&t==document.documentElement.clientHeight-oDiv.offsetHeight){
+				clearInterval(timer);
+			}
+			//document.title = i;
+		},30);
 
-<body>
-<canvas id='canvas'></canvas>
-<canvas id='canv'></canvas>
-<script>
-var c = document.getElementById('canv'),
- $ = c.getContext('2d'),
- w = c.width = window.innerWidth,
- h = c.height = window.innerHeight,
- t = 0,
- num = 950,
- s, a, b, u = 0,
- x, y, _x, _y,
- _t = 1 / 16;
+		oDiv.onmousedown=function(ev){
+			clearInterval(oDiv.timer);
+			var oEvent = ev||event;
+			disX = oEvent.clientX-oDiv.offsetLeft;
+			disY = oEvent.clientY-oDiv.offsetTop;
 
-function random(min, max) {
- return Math.random() * (max - min) + min;
-}
-
-var anim = function() {
- $.globalCompositeOperation = 'multiply';
- $.fillStyle = 'hsla(258,20%,50%,1)';
- $.fillRect(0, 0, w, h);
- $.globalCompositeOperation = 'lighter';
- for (var i = 0; i < .5; i++) {
-  x = 0;
-  _u = (u) + i * 2, col = u + (_u * 8);
-  $.beginPath();
-  for (var j = 0; j < num; j++) {
-   x -= .312 * Math.sin(15);
-   y = x * Math.sin(i + 3.05 * t + x / 7) / 12;
-   _x = x * Math.cos(b) + y * Math.sin(b);
-   _y = x * Math.sin(b) - y * Math.cos(b);
-   b = (j * 2.1102) * Math.PI / -.1008;
-   $.arc(w / 2 - _x, h / 2 - _y, random(.001, .6), 300, Math.PI * 2 + .1);
-   $.lineWidth = .2;
-  }
-  var g = $.createLinearGradient(w / 2 + _x, h / 2 + _y,
-   1, w / 2 + _x, h / 2 + _y);
-  g.addColorStop(0.2, 'hsla(' + col + ',90%,50%,.2)');
-  g.addColorStop(0.9, 'hsla(' + _u + ',95%,50%,.3)');
-  g.addColorStop(1, 'hsla(0,0%,100%,.4)');
-  $.strokeStyle = g;
-  $.stroke();
- }
- t += _t / 2;
- u -= .2;
- window.requestAnimationFrame(anim);
-};
-anim();
-
-window.addEventListener('resize', function() {
- c.width = w = window.innerWidth;
- c.height = h = window.innerHeight;
-}, false);
-
-var canvas, ctx, tim;
-canvas = document.getElementsByTagName('canvas')[0];
-ctx = canvas.getContext('2d');
-canvas.width = canvas.height = 400;
-baum();
-
-function baum() {
- var a, b, c, d, e, x, y, r;
- ctx.globalCompositeOperation = "source-over";
- ctx.fillStyle = "hsla(26,100%,0%,1)";
- ctx.fillRect(0, 0, canvas.width, canvas.height);
- ctx.globalCompositeOperation = "color-burn";
- tim = new Date().getTime() / Math.PI / 72;
-
- c = [];
- r = tim / 32;
- for (a = 0; a < 18; a++) {
-  b = 160;
-  if (a % 2 == 1) b = 100;
-  x = Math.cos(r) * b;
-  y = Math.sin(r) * b;
-  c.push([200 + x, 200 + y]);
-  r += Math.PI * 2 / 14;
- }
-
- for (a = 0; a < 7; a++) {
-  b = c[a * 2];
-  d = c[a * 2 + 1];
-  e = c[(a * 2 + 13) % 14];
-  tri([
-   [200, 200], b, d
-  ], 0);
-  tri([
-   [200, 200], b, e
-  ], 0);
- }
- requestAnimationFrame(baum);
-}
-
-function tri(p, ban) {
- var a, b, c, d, e, f, x, y, han, r1, r2;
- x = y = 0;
- for (a = 0; a < 3; a++) {
-  x += p[a][0];
-  y += p[a][1];
- }
- x = x / 3 - canvas.width / 2;
- y = y / 3 - canvas.height / 2;
- han = Math.pow(x * x + y * y, 0.5);
- c = 0.2 + Math.sin(tim / 13) * 0.15;
- r1 = 0.5 + Math.sin(han / 20 * (1 + Math.sin(tim / 19) * 0.7) + tim / 41) * c;
- r2 = 1 - r1;
- c = p[0][0] * (p[1][1] - p[2][1]);
- c += p[1][0] * (p[2][1] - p[0][1]);
- c += p[2][0] * (p[0][1] - p[1][1]);
- c = Math.abs(c);
-
- if (c < 100) {
-  if (ban % 17 == 1) {
-   a = ((han + tim * 3) % 360) | 0;
-   b = 0.4;
-   if (ban % 12 > 8) b = 1;
-
-   ctx.fillStyle = ctx.strokeStyle = "hsla(" + a * 2 + ",60%,40%,0.53)";
-   ctx.beginPath();
-   for (a = 0; a < p.length; a++) {
-    b = p[a];
-    ctx.globalCompositeOperation = "lighter";
-    ctx.lineTo(b[0], b[1]);
-   }
-   ctx.fill();
-   if (Math.random() < 0.2) return;
-  }
-  if (ban % 50 > 28) return;
-  if (c < 20) return;
- }
-
- d = 0;
- for (a = 0; a < p.length; a++) {
-  b = p[a];
-  c = p[(a + 1) % p.length];
-  x = b[0] - c[0];
-  y = b[1] - c[1];
-  e = Math.pow(x * x + y * y, 0.5);
-  if (e > d) {
-   d = e;
-   f = a;
-  }
- }
-
- a = p[f];
- b = p[(f + 1) % p.length];
- c = p[(f + 2) % p.length];
- x = a[0] * r1 + b[0] * r2;
- y = a[1] * r1 + b[1] * r2;
- tri([b, c, [x, y]], ban + 1);
- tri([c, a, [x, y]], ban + 2);
-}
+			document.onmousemove=function(ev){
+				var oEvent = ev||event;
+				oDiv.style.left=oEvent.clientX-disX+'px';
+				oDiv.style.top=oEvent.clientY-disY+'px';
+				iSpeedX = oEvent.clientX - lastX;
+				iSpeedY = oEvent.clientY - lastY;
+				lastX = oEvent.clientX;
+				lastY = oEvent.clientY;
+			};
+			document.onmouseup=function(){
+				document.onmousemove=null;
+				document.onmouseup=null;
+				move(oDiv);
+				oDiv.releaseCapture&&oDiv.releaseCapture();
+			};
+			oDiv.setCapture&&oDiv.setCapture();
+			return false;
+		};
+		function move(obj){
+			clearInterval(obj.timer);
+			obj.timer = setInterval(function(){
+				//重力
+				iSpeedY+=3;
+				var l = obj.offsetLeft+iSpeedX;
+				var t = obj.offsetTop+iSpeedY;
+				if(t<0){
+					t = 0;
+					iSpeedY*=-0.85;
+					iSpeedX*= 0.85;
+				}
+				if(t>document.documentElement.clientHeight-obj.offsetHeight){
+					t=document.documentElement.clientHeight-obj.offsetHeight;
+					iSpeedY*=-0.85;
+					iSpeedX*= 0.85;
+				}
+				if(l<0){
+					l = 0;
+					iSpeedX*=-0.85;
+					iSpeedY *=0.85;
+				}
+				if(l>document.documentElement.clientWidth-obj.offsetWidth){
+					l=document.documentElement.clientWidth-obj.offsetWidth;
+					iSpeedX*=-0.85;
+					iSpeedY *=0.85;
+				}
+				obj.style.left = l +'px';
+				obj.style.top = t +'px';
+				Math.abs(iSpeedX)<1&&(iSpeedX = 0);
+				Math.abs(iSpeedY)<1&&(iSpeedY = 0);
+				if(iSpeedX == 0&&iSpeedY == 0&&t==document.documentElement.clientHeight-obj.offsetHeight){
+					clearInterval(obj.timer);
+				}
+			},30);
+		}
+	};
 </script>
+	<div class="section">
+		<nav class="nav" role="navigation">
+			<ul>
+				<li class="nav-about fade fade1"><a href="#about">关于</a></li>
+				<li class="nav-works fade fade4"><a href="#works">作品</a></li>
+				<li class="fade back-home"><a href="#top">首页</a></li>
+				<li class="nav-skill fade fade2"><a href="#skill">能力</a></li>
+				<li class="nav-contact fade fade3"><a href="#contact">联系</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="nav-bg"></div>
+</div>
+<div class="home-bg">
+	<img src="images/home-bg.jpg" alt="" width="1000" height="667">
+</div>
+<div class="section-wrap section-fristpage" data-slide="1"  >
+
+	<div class="section">
+		<div class="section-content">
+			<p class="fade fade1">Hi，我是 徐照森</p>
+			<p class="fade fade2">欢迎您浏览我的个人站！</p>
+			<p class="fade fade3">想对我有更多了解，请向下滚动哦 ^_^</p>
+		</div>
+		<a class="button2 scroll-tip fade fade4" data-slide="3" title="">向下滚动</a>
+	</div>
+</div>
+<div id="about" data-slide="2" data-stellar-background-ratio="0.3" class="section-wrap section-about">
+	<div class="section">
+		<div class="about-content clearfix section-content">
+			<div class="introli">
+			  <span class="left_icon"><img class="bio-text bio-icon-1" style="margin-left:-250px" src="images/bio-icon-1.png" data-stellar-ratio="0.7"></span>
+			  <span class="right_content "><img class="bio-text bio-text-1" src="images/bio-text-1.png" data-stellar-ratio="0.7" ></span>
+			</div>
+			<div class="introli">
+			  <span class="left_icon"><img class="bio-text bio-icon-2" style="margin-left:-250px" src="images/bio-icon-2.png" data-stellar-ratio="0.7" ></span>
+			  <span class="right_content"><img class="bio-text bio-text-2" src="images/bio-text-2.png" data-stellar-ratio="0.7" ></span>
+			</div>
+			<div class="introli">
+			  <span class="left_icon"><img class="bio-text bio-icon-3" style="margin-left:-250px" src="images/bio-icon-3.png" data-stellar-ratio="0.7" ></span>
+			  <span class="right_content"><img class="bio-text bio-text-3" src="images/bio-text-3.png" data-stellar-ratio="0.7" ></span>
+			</div>
+
+		</div>
+
+	</div>
+	<a class="button2 dark-button2 scroll-tip" style="background-position:0 -60px;" data-slide="3" title=""></a>
+</div>
+<div id="works" class="section-wrap section-works" data-slide="3" >
+
+	<div class="section">
+		<div class="works-content section-content">
+	</iframe>
+			<h1>前端作品</h1>
+			<div class="works-list clearfix">
+				<div class="works-item first fade fade1">
+					<a href="https://github.com/adminwarlock/Omega" target="_blank">
+						<img src="images/works/elm.jpg" alt="" width="300" height="180">
+						<div class="work-info">
+							<h2>vue1.0仿elm app</h2>
+							<p><strong>开发时间</strong>：2017.01.01<br>
+							<strong>工作详情</strong>：vue仿elm APP</p>
+						</div>
+					</a>
+				</div>
+				<div class="works-item fade fade2">
+					<a href="http://playlounge.cn" target="_blank">
+						<img src="images/works/v.jpg" alt="" width="300" height="180">
+						<div class="work-info">
+							<h2>某品牌主页</h2>
+							<p><strong>开发时间</strong>：2017.02.01<br>
+							<strong>工作详情</strong>：view部分开发</p>
+						</div>
+					</a>
+				</div>
+				<div class="works-item fade fade3">
+					<a href="http://noobchina.xyz" target="_blank">
+						<img src="images/works/3.jpg" alt="" width="300" height="180">
+						<div class="work-info">
+							<h2>影遁</h2>
+							<p><strong>开发时间</strong>：2016.06.04<br>
+							<strong>工作详情</strong>：github开源项目搭建梯子</p>
+						</div>
+					</a>
+				</div>
+				<div class="works-item first fade fade4">
+					<a href="http://www.hnhshs.com" target="_blank">
+						<img src="images/works/4.jpg" alt="" width="300" height="180">
+						<div class="work-info">
+							<h2>岳阳华盛官网</h2>
+							<p><strong>开发时间</strong>：2016.07.01<br>
+							<strong>工作详情</strong>：整站页面以及js特效</p>
+						</div>
+					</a>
+				</div>
+				<div class="works-item fade fade2">
+					<a href="http://chinanoob.xyz" target="_blank">
+						<img src="images/works/2.jpg" alt="" width="300" height="180">
+						<div class="work-info">
+							<h2>BLOG_留言板</h2>
+							<p><strong>开发时间</strong>：1970.01.01<br>
+							<strong>工作详情</strong>：通过ajax与后台交互数据</p>
+						</div>
+					</a>
+				</div>
+				<div class="works-item fade fade1">
+					<a href="http://news.chinanoob.xyz" target="_blank">
+						<img src="images/works/5.jpg" alt="" width="300" height="180">
+						<div class="work-info">
+							<h2>科技新闻 DMEO</h2>
+							<p><strong>开发时间</strong>：2016.10.01<br>
+							<strong>工作详情</strong>：jsonp瀑布流新闻DEMO</p>
+						</div>
+					</a>
+				</div>
+			</div>
+<!-- 			<a class="more-link" href="page/product">查看更多</a> -->
+		</div>
+		<a class="button2 scroll-tip fade fade4" data-slide="4" title="">向下滚动</a>
+	</div>
+</div>
+<div id="skill" class="section-wrap section-skill" data-slide="4">
+	<div class="section">
+		<div class="skill-content section-content">
+			<h1>相关技能</h1>
+			<ul>
+				<li class="fade fade1">熟练掌握语义化的 HTML 和具有兼容性的 CSS 模式。</li>
+				<li class="fade fade3">熟练使用Photoshop对设计图进行切割和导出。</li>
+				<li class="fade fade2">熟悉HTML5 和 CSS3。</li>
+				<li class="fade fade4">了解 Ajax、jsonp 工作原理和实现方法。</li>
+				<li class="fade fade1">了解手机前端开发jquerymobile，swiper等。</li>
+				<li class="fade fade4">了解jQuery，能够实现日常需要的交互效果。</li>
+				<li class="fade fade2">了解angularjs、vue、bootstrap等框架。</li>
+				<li class="fade fade3">对Nodejs、PHP 后端的相关知识有一定的了解。</li>
+				<li class="fade fade2">了解Emmet、git、gulp等等前端开发和团队协作工具。</li>
+				<li class="fade fade4">使用过国外VPS建站，对 Linux 有一定了解。</li>
+				<li class="fade fade2">喜欢接触新事物，有一定的自学能力。</li>
+			</ul>
+		</div>
+	</div>
+	<a class="button2 scroll-tip fade fade4"  data-slide="5" title="">向下滚动</a>
+</div>
+<div id="contact" class="section-wrap section-contact" data-slide="5">
+	<div class="section">
+		<div class="contact-content clearfix section-content">
+			<h1>联系本人</h1>
+			<div class="left">
+				<div class="contact-ways fade fade1">
+					<h2>扫描二维码或者以下方式联系我吧！</h2>
+					<ul>
+						<li>QQ:3036369318</li>
+						<li>手机：18500677716</li>
+						<li>邮箱：3036369318@qq.com</li>
+						<li>博客：<a href="http://chinanoob.xyz" target="_blank">旌瀚的前端小站</a></li>
+						<li>Github：<a href="https://github.com/adminwarlock" target="_blank">
+						adminwarlock</a></li>
+						<li>简历：<a href="http://me.chinanoob.xyz/jianli.html" target="_blank">点我获取吧</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<a class="button2 button2-2-top scroll-tip" id="gototops" data-slide="1" href="#top" style="background-position: -60px 0;width:80px;height:80px;" title=""></a>
+</div>
+
+<div class="overlay"></div>
+<div class="state-indicator"></div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script src="js/global.js"></script>
+<script src="js/waypoints.min.js"></script>
+<script src="js/js.js"></script>
+<script src="js/jquery.stellar.min.js"></script>
 </body>
 </html>
